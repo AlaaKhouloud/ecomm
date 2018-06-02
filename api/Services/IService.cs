@@ -1,4 +1,5 @@
-﻿using System;
+﻿using api.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,7 @@ namespace api.Services
 {
     interface IService
     {
+        Boolean SignIn(string username, string password);
+        Boolean SignUp(AspNetUser user);
     }
 }
