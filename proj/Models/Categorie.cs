@@ -9,5 +9,6 @@ namespace proj.Models
     {
         public string refCat { get; set; }
         public string nomcatg { get; set; }
+        public virtual ICollection<Article> Articles { get; set; }
     }
 }

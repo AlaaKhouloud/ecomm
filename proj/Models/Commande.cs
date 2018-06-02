@@ -9,9 +9,10 @@ namespace proj.Models
     {
         public int numCmd { get; set; }
         public string dateCmd { get; set; }
-        public int idClient { get; set; }
-        public ICollection<LigneCommande> ligneCommandes { get; set; }
-        public float totalPrice;
+        public string idClient { get; set; }
+
+        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual ICollection<LigneCommande> LigneCommandes { get; set; }
 
     }
 }

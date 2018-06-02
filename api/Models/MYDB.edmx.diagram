@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2f701e73101c4f91b9bebfb319b1cdbc" Name="Diagram1">
+        <EntityTypeShape EntityType="ASPPROJModel.Article" Width="1.5" PointX="5.25" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASPPROJModel.AspNetRole" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASPPROJModel.AspNetUser" Width="1.5" PointX="3" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASPPROJModel.Categorie" Width="1.5" PointX="3" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASPPROJModel.Commande" Width="1.5" PointX="5.25" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASPPROJModel.LigneCommande" Width="1.5" PointX="7.5" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASPPROJModel.sysdiagram" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="ASPPROJModel.FK__Article__refCat__3F466844" ManuallyRouted="false" />
+        <AssociationConnector Association="ASPPROJModel.FK__LigneComm__numAr__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="ASPPROJModel.FK__Commande__idClie__47DBAE45" ManuallyRouted="false" />
+        <AssociationConnector Association="ASPPROJModel.FK__LigneComm__numCm__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="ASPPROJModel.AspNetUserRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
