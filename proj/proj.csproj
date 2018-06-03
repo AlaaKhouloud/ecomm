@@ -1330,10 +1330,12 @@
     <Content Include="Views\Home\Administration.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutPage1.cshtml" />
+    <Content Include="Views\Shared\_LayoutPageProduct.cshtml" />
+    <Content Include="Views\Articles\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutPageRegister.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Articles\" />
     <Folder Include="Views\Categories\" />
     <Folder Include="Views\Commandes\" />
     <Folder Include="Views\LigneCommandes\" />
