@@ -26,6 +26,39 @@ namespace proj
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+            //Template Admin
+            bundles.Add(new ScriptBundle("~/JsAdmin").Include(
+                      "~/Content/DemoAdmin/plugins/jQuery/jquery-2.2.3.min.js",
+                      "~/Content/DemoAdmin/bootstrap/js/bootstrap.min.js",
+                      "~/Content/DemoAdmin/plugins/slimScroll/jquery.slimscroll.min.js",
+                      "~/Content/DemoAdmin/plugins/fastclick/fastclick.js",
+                       "~/Content/DemoAdmin/dist/js/app.min.js",
+                        "~/Content/DemoAdmin/dist/js/demo.js"
+                      ));
+
+            bundles.Add(new StyleBundle("~/CssAdmin").Include(
+                      "~/Content/DemoAdmin/bootstrap/css/bootstrap.min.css",
+                      "~/Content/DemoAdmin/dist/css/AdminLTE.min.css",
+                      "~/Content/DemoAdmin/dist/css/skins/_all-skins.min.css"));
+            //Template User
+            bundles.Add(new ScriptBundle("~/JsUser").Include(
+                     "~/Content/DemoUser/js/jquery.min.js",
+                     "~/Content/DemoUser/js/bootstrap.min.js",
+                     "~/Content/DemoUser/js/slick.min.js",
+                     "~/Content/DemoUser/js/nouislider.min.js",
+                      "~/Content/DemoUser/js/jquery.zoom.min.js",
+                       "~/Content/DemoUser/js/main.js"
+                     ));
+
+            bundles.Add(new StyleBundle("~/CssUser").Include(
+                      "~/Content/DemoUser/css/bootstrap.min.css",
+                      "~/Content/DemoUser/css/slick.css",
+                      "~/Content/DemoUser/css/slick-theme.css",
+                      "~/Content/DemoUser/css/nouislider.min.css",
+                      "~/Content/DemoUser/css/font-awesome.min.css",
+                      "~/Content/DemoUser/css/style.css"
+                      ));
+            BundleTable.EnableOptimizations = true;
         }
     }
 }
