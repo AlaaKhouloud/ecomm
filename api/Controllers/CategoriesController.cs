@@ -17,7 +17,7 @@ namespace api.Controllers
         private ASPPROJEntities db = new ASPPROJEntities();
 
         // GET: api/Categories
-        public IQueryable<Categorie> GetCategories()
+        public IEnumerable<Categorie> GetCategories()
         {
             return db.Categories;
         }

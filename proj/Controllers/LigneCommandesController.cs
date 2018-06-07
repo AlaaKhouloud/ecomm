@@ -1,6 +1,8 @@
-﻿using System;
+﻿using proj.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 
@@ -11,11 +13,14 @@ namespace proj.Controllers
         // GET: LigneCommandes
         public ActionResult Index()
         {
-            return View();
+            HttpResponseMessage response = ClientCall.client.GetAsync("api/LigneCommandes").Result;
+            IEnumerable<LigneCommande> liste = response.Content.ReadAsAsync<IEnumerable<LigneCommande>>().Result;
+
+            return View(liste);
         }
 
         // GET: LigneCommandes/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string id)
         {
             return View();
         }
@@ -28,13 +33,20 @@ namespace proj.Controllers
 
         // POST: LigneCommandes/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(LigneCommande formCollection)
         {
             try
             {
+                
+                LigneCommande cat = new LigneCommande(formCollection.numLigne, formCollection.QteArticle, formCollection.totalPrice, formCollection.numCmd, formCollection.numArticle, formCollection.Article, formCollection.Commande);
                 // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                var message = ClientCall.client.PostAsJsonAsync("api/LigneCommandes", cat).Result;
+                if (message.IsSuccessStatusCode) return RedirectToAction("Index");
+                else
+                {
+                    ViewData["eror"] = message.ReasonPhrase + " " + message.Content;
+                    return View();
+                }
             }
             catch
             {
@@ -43,26 +55,34 @@ namespace proj.Controllers
         }
 
         // GET: LigneCommandes/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
             return View();
         }
 
         // POST: LigneCommandes/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(string id, LigneCommande formCollection)
         {
+            int id2 = Convert.ToInt32(id);
             try
             {
                 // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                LigneCommande cat = new LigneCommande(id2, formCollection.QteArticle, formCollection.totalPrice, formCollection.numCmd, formCollection.numArticle, formCollection.Article, formCollection.Commande);
+                HttpResponseMessage response = ClientCall.client.PutAsJsonAsync("api/LigneCommandes/" + id, cat).Result;
+                if (response.IsSuccessStatusCode) return RedirectToAction("Index");
+                else
+                {
+                    ViewData["eror"] = response.ReasonPhrase + " " + response.Content;
+                    return View();
+                }
             }
             catch
             {
                 return View();
             }
         }
+
 
         // GET: LigneCommandes/Delete/5
         public ActionResult Delete(int id)
@@ -72,11 +92,13 @@ namespace proj.Controllers
 
         // POST: LigneCommandes/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(string id, FormCollection collection)
         {
+            int id2 = Convert.ToInt32(id);
             try
             {
                 // TODO: Add delete logic here
+                var message = ClientCall.client.DeleteAsync("api/LigneCommandes/" + id2).Result;
 
                 return RedirectToAction("Index");
             }

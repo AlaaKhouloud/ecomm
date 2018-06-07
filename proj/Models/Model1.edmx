@@ -1,0 +1,443 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ASPPROJModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="numArticle" />
+          </Key>
+          <Property Name="numArticle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="designation" Type="varchar" MaxLength="255" />
+          <Property Name="prixU" Type="varchar" MaxLength="255" />
+          <Property Name="stock" Type="int" />
+          <Property Name="photo" Type="varchar" MaxLength="255" />
+          <Property Name="refCat" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Categorie">
+          <Key>
+            <PropertyRef Name="refCat" />
+          </Key>
+          <Property Name="refCat" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="nomcatg" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Commande">
+          <Key>
+            <PropertyRef Name="numCmd" />
+          </Key>
+          <Property Name="numCmd" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dateCmd" Type="varchar" MaxLength="50" />
+          <Property Name="idClient" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="LigneCommande">
+          <Key>
+            <PropertyRef Name="numLigne" />
+          </Key>
+          <Property Name="numLigne" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QteArticle" Type="int" />
+          <Property Name="totalPrice" Type="float" />
+          <Property Name="numCmd" Type="int" />
+          <Property Name="numArticle" Type="int" />
+        </EntityType>
+        <Association Name="FK__Article__refCat__3F466844">
+          <End Role="Categorie" Type="Self.Categorie" Multiplicity="0..1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorie">
+              <PropertyRef Name="refCat" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="refCat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Commande__idClie__47DBAE45">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="Commande" Type="Self.Commande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Commande">
+              <PropertyRef Name="idClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LigneComm__numAr__4BAC3F29">
+          <End Role="Article" Type="Self.Article" Multiplicity="0..1" />
+          <End Role="LigneCommande" Type="Self.LigneCommande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="numArticle" />
+            </Principal>
+            <Dependent Role="LigneCommande">
+              <PropertyRef Name="numArticle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LigneComm__numCm__4AB81AF0">
+          <End Role="Commande" Type="Self.Commande" Multiplicity="0..1" />
+          <End Role="LigneCommande" Type="Self.LigneCommande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commande">
+              <PropertyRef Name="numCmd" />
+            </Principal>
+            <Dependent Role="LigneCommande">
+              <PropertyRef Name="numCmd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ASPPROJModelStoreContainer">
+          <EntitySet Name="Article" EntityType="Self.Article" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categorie" EntityType="Self.Categorie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Commande" EntityType="Self.Commande" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LigneCommande" EntityType="Self.LigneCommande" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Article__refCat__3F466844" Association="Self.FK__Article__refCat__3F466844">
+            <End Role="Categorie" EntitySet="Categorie" />
+            <End Role="Article" EntitySet="Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Commande__idClie__47DBAE45" Association="Self.FK__Commande__idClie__47DBAE45">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Commande" EntitySet="Commande" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LigneComm__numAr__4BAC3F29" Association="Self.FK__LigneComm__numAr__4BAC3F29">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="LigneCommande" EntitySet="LigneCommande" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LigneComm__numCm__4AB81AF0" Association="Self.FK__LigneComm__numCm__4AB81AF0">
+            <End Role="Commande" EntitySet="Commande" />
+            <End Role="LigneCommande" EntitySet="LigneCommande" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ASPPROJModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="numArticle" />
+          </Key>
+          <Property Name="numArticle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="designation" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="prixU" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="stock" Type="Int32" />
+          <Property Name="photo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="refCat" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Categorie" Relationship="Self.FK__Article__refCat__3F466844" FromRole="Article" ToRole="Categorie" />
+          <NavigationProperty Name="LigneCommandes" Relationship="Self.FK__LigneComm__numAr__4BAC3F29" FromRole="Article" ToRole="LigneCommande" />
+        </EntityType>
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Commandes" Relationship="Self.FK__Commande__idClie__47DBAE45" FromRole="AspNetUsers" ToRole="Commande" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="Categorie">
+          <Key>
+            <PropertyRef Name="refCat" />
+          </Key>
+          <Property Name="refCat" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nomcatg" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Articles" Relationship="Self.FK__Article__refCat__3F466844" FromRole="Categorie" ToRole="Article" />
+        </EntityType>
+        <EntityType Name="Commande">
+          <Key>
+            <PropertyRef Name="numCmd" />
+          </Key>
+          <Property Name="numCmd" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dateCmd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="idClient" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK__Commande__idClie__47DBAE45" FromRole="Commande" ToRole="AspNetUsers" />
+          <NavigationProperty Name="LigneCommandes" Relationship="Self.FK__LigneComm__numCm__4AB81AF0" FromRole="Commande" ToRole="LigneCommande" />
+        </EntityType>
+        <EntityType Name="LigneCommande">
+          <Key>
+            <PropertyRef Name="numLigne" />
+          </Key>
+          <Property Name="numLigne" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QteArticle" Type="Int32" />
+          <Property Name="totalPrice" Type="Double" />
+          <Property Name="numCmd" Type="Int32" />
+          <Property Name="numArticle" Type="Int32" />
+          <NavigationProperty Name="Article" Relationship="Self.FK__LigneComm__numAr__4BAC3F29" FromRole="LigneCommande" ToRole="Article" />
+          <NavigationProperty Name="Commande" Relationship="Self.FK__LigneComm__numCm__4AB81AF0" FromRole="LigneCommande" ToRole="Commande" />
+        </EntityType>
+        <Association Name="FK__Article__refCat__3F466844">
+          <End Role="Categorie" Type="Self.Categorie" Multiplicity="0..1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorie">
+              <PropertyRef Name="refCat" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="refCat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LigneComm__numAr__4BAC3F29">
+          <End Role="Article" Type="Self.Article" Multiplicity="0..1" />
+          <End Role="LigneCommande" Type="Self.LigneCommande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="numArticle" />
+            </Principal>
+            <Dependent Role="LigneCommande">
+              <PropertyRef Name="numArticle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Commande__idClie__47DBAE45">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
+          <End Role="Commande" Type="Self.Commande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Commande">
+              <PropertyRef Name="idClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LigneComm__numCm__4AB81AF0">
+          <End Role="Commande" Type="Self.Commande" Multiplicity="0..1" />
+          <End Role="LigneCommande" Type="Self.LigneCommande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commande">
+              <PropertyRef Name="numCmd" />
+            </Principal>
+            <Dependent Role="LigneCommande">
+              <PropertyRef Name="numCmd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="ASPPROJEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Articles" EntityType="Self.Article" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="Categories" EntityType="Self.Categorie" />
+          <EntitySet Name="Commandes" EntityType="Self.Commande" />
+          <EntitySet Name="LigneCommandes" EntityType="Self.LigneCommande" />
+          <AssociationSet Name="FK__Article__refCat__3F466844" Association="Self.FK__Article__refCat__3F466844">
+            <End Role="Categorie" EntitySet="Categories" />
+            <End Role="Article" EntitySet="Articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LigneComm__numAr__4BAC3F29" Association="Self.FK__LigneComm__numAr__4BAC3F29">
+            <End Role="Article" EntitySet="Articles" />
+            <End Role="LigneCommande" EntitySet="LigneCommandes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Commande__idClie__47DBAE45" Association="Self.FK__Commande__idClie__47DBAE45">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Commande" EntitySet="Commandes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LigneComm__numCm__4AB81AF0" Association="Self.FK__LigneComm__numCm__4AB81AF0">
+            <End Role="Commande" EntitySet="Commandes" />
+            <End Role="LigneCommande" EntitySet="LigneCommandes" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ASPPROJModelStoreContainer" CdmEntityContainer="ASPPROJEntities">
+          <EntitySetMapping Name="Articles">
+            <EntityTypeMapping TypeName="ASPPROJModel.Article">
+              <MappingFragment StoreEntitySet="Article">
+                <ScalarProperty Name="numArticle" ColumnName="numArticle" />
+                <ScalarProperty Name="designation" ColumnName="designation" />
+                <ScalarProperty Name="prixU" ColumnName="prixU" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="photo" ColumnName="photo" />
+                <ScalarProperty Name="refCat" ColumnName="refCat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="ASPPROJModel.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="ASPPROJModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="ASPPROJModel.Categorie">
+              <MappingFragment StoreEntitySet="Categorie">
+                <ScalarProperty Name="refCat" ColumnName="refCat" />
+                <ScalarProperty Name="nomcatg" ColumnName="nomcatg" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Commandes">
+            <EntityTypeMapping TypeName="ASPPROJModel.Commande">
+              <MappingFragment StoreEntitySet="Commande">
+                <ScalarProperty Name="numCmd" ColumnName="numCmd" />
+                <ScalarProperty Name="dateCmd" ColumnName="dateCmd" />
+                <ScalarProperty Name="idClient" ColumnName="idClient" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LigneCommandes">
+            <EntityTypeMapping TypeName="ASPPROJModel.LigneCommande">
+              <MappingFragment StoreEntitySet="LigneCommande">
+                <ScalarProperty Name="numLigne" ColumnName="numLigne" />
+                <ScalarProperty Name="QteArticle" ColumnName="QteArticle" />
+                <ScalarProperty Name="totalPrice" ColumnName="totalPrice" />
+                <ScalarProperty Name="numCmd" ColumnName="numCmd" />
+                <ScalarProperty Name="numArticle" ColumnName="numArticle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="ASPPROJModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

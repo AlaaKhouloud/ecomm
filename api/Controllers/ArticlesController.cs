@@ -17,8 +17,10 @@ namespace api.Controllers
         private ASPPROJEntities db = new ASPPROJEntities();
 
         // GET: api/Articles
-        public IQueryable<Article> GetArticles()
+        public IEnumerable<Article> GetArticles()
         {
+            //string des= "AAAA";
+            //return db.Articles.Where<Article>(e=>e.refCat == des);
             return db.Articles;
         }
 
