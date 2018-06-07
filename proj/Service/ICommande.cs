@@ -10,5 +10,6 @@ namespace proj.Service
     public interface ICommande
     {
         IEnumerable<Commande> FIndAll();
+        Commande GetCommande(int id);
     }
 }

@@ -31,13 +31,9 @@ namespace proj.Controllers
         }
 
         // GET: Commandes/Details/5
-        public ActionResult Details(int id)
+        public ViewResult Details(int id)
         {
-            Commande c;
-            HttpResponseMessage respose = ClientCall.client.GetAsync("api/Commandes/" + id.ToString()).Result;
-
-            c= respose.Content.ReadAsAsync<Commande>().Result;
-            return View(c);
+            return View("Details", _service.GetCommande(id));
         }
 
         // GET: Commandes/Create
@@ -69,9 +65,9 @@ namespace proj.Controllers
         }
 
         // GET: Commandes/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
-            return View();
+            return View(_service.GetCommande(id));
         }
 
         // POST: Commandes/Edit/5
