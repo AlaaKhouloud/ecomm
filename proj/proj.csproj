@@ -251,6 +251,8 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\CommandeImpl.cs" />
+    <Compile Include="Service\ICommande.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

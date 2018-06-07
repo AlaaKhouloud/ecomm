@@ -1,4 +1,5 @@
 ﻿using proj.Models;
+using proj.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,19 +11,33 @@ namespace proj.Controllers
 {
     public class CommandesController : Controller
     {
-        // GET: Commandes
-        public ActionResult Index()
-        {
-            HttpResponseMessage response = ClientCall.client.GetAsync("api/Commandes").Result;
-            IEnumerable<Commande> liste = response.Content.ReadAsAsync<IEnumerable<Commande>>().Result;
+        ICommande _service;
 
-            return View(liste);
+        public CommandesController(ICommande service)
+        {
+            _service = service;
+        }
+
+        public CommandesController()
+        {
+            _service = new CommandeImpl();
+        }
+
+        // GET: Commandes
+        public ViewResult Index()
+        {
+          
+            return View("Index", _service.FIndAll());
         }
 
         // GET: Commandes/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Commande c;
+            HttpResponseMessage respose = ClientCall.client.GetAsync("api/Commandes/" + id.ToString()).Result;
+
+            c= respose.Content.ReadAsAsync<Commande>().Result;
+            return View(c);
         }
 
         // GET: Commandes/Create
@@ -107,5 +122,4 @@ namespace proj.Controllers
             }
         }
     }
-}
 }
