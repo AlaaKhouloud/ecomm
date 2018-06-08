@@ -20,7 +20,16 @@ namespace api.Models
         {
             this.Articles = new HashSet<Article>();
         }
-    
+
+        public Categorie(string nom)
+        {
+            this.nomcatg = nom;
+        }
+        public Categorie(string refcat, string nom)
+        {
+            this.refCat = refcat;
+            this.nomcatg = nom;
+        }
         public string refCat { get; set; }
         public string nomcatg { get; set; }
     

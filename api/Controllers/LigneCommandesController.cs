@@ -35,6 +35,19 @@ namespace api.Controllers
             return Ok(ligneCommande);
         }
 
+        // GET: api/LigneCommandes/price/5
+        [ResponseType(typeof(string))]
+        public IHttpActionResult GetArticlePrice(int id)
+        {
+            string prix = db.Articles.Find(id).prixU;
+            if (db.Articles.Find(id) == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(prix);
+        }
+
         // PUT: api/LigneCommandes/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutLigneCommande(int id, LigneCommande ligneCommande)

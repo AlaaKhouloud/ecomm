@@ -3,6 +3,7 @@
 }
 @model  IEnumerable<proj.Models.Article>
 
+@Html.ActionLink("Create","Create")
 <div class="row">
 
     <div class="col-md-4">
@@ -12,8 +13,10 @@
                 <td>Designation</td>
                 <td>prix</td>
                 <td>stock</td>
-                <td>Details</td>
-                <td>Ajouter Au panier</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
 
             @foreach (var x in Model)
@@ -21,7 +24,10 @@
             <tr>
                 <td>@x.designation</td>
                 <td>@x.prixU</td>
+                <td>@x.stock</td>
                 <td><a href="Articles/Details?id=@x.numArticle">Details</a></td>
+                <td><a href="Articles/Delete?id=@x.numArticle">Delete</a></td>
+                <td><a href="Articles/Edit?id=@x.numArticle">Edit</a></td>
                 @*/LigneCommandes/Create*@
                 <td><a href="#">Add to cart</a></td>
             </tr>

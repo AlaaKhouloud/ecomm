@@ -1,0 +1,25 @@
+﻿@model proj.Models.Article
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Article</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.designation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.designation)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.numArticle }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

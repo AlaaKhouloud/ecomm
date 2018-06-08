@@ -30,8 +30,7 @@ namespace api.Controllers
             if (categorie == null)
             {
                 return NotFound();
-            }
-
+            } 
             return Ok(categorie);
         }
 
