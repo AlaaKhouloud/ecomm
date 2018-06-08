@@ -11,7 +11,8 @@ namespace proj.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Article
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -31,7 +32,7 @@ namespace proj.Models
             Categorie = categorie;
             LigneCommandes = ligneCommandes;
         }
-
+        [Key]
         public int numArticle { get; set; }
         public string designation { get; set; }
         public string prixU { get; set; }

@@ -40,8 +40,25 @@ namespace proj
                       "~/Content/DemoAdmin/bootstrap/css/bootstrap.min.css",
                       "~/Content/DemoAdmin/dist/css/AdminLTE.min.css",
                       "~/Content/DemoAdmin/dist/css/skins/_all-skins.min.css"));
-            //Template User
-            bundles.Add(new ScriptBundle("~/JsUser").Include(
+            //Table 
+            bundles.Add(new StyleBundle("~/CssTable").Include(
+                      "~/Content/DemoAdmin/plugins/datatables/dataTables.bootstrap.css",
+                      "~/Content/DemoAdmin/dist/css/AdminLTE.min.css"));
+
+            bundles.Add(new ScriptBundle("~/JsTable").Include(
+                       "~/Content/DemoAdmin/plugins/jQuery/jquery-2.2.3.min.js",
+                       "~/Content/DemoAdmin/bootstrap/js/bootstrap.min.js",
+                       "~/Content/DemoAdmin/plugins/datatables/jquery.dataTables.min.js",
+                       "~/Content/DemoAdmin/plugins/datatables/dataTables.bootstrap.min.js",
+                        "~/Content/DemoAdmin/plugins/slimScroll/jquery.slimscroll.min.js",
+                        "~/Content/DemoAdmin/plugins/fastclick/fastclick.js",
+                         "~/Content/DemoAdmin/dist/js/app.min.js",
+                         "~/Content/DemoAdmin/dist/js/demo.js"
+                       ));
+
+
+                   //Template User
+                   bundles.Add(new ScriptBundle("~/JsUser").Include(
                      "~/Content/DemoUser/js/jquery.min.js",
                      "~/Content/DemoUser/js/bootstrap.min.js",
                      "~/Content/DemoUser/js/slick.min.js",
@@ -50,7 +67,7 @@ namespace proj
                        "~/Content/DemoUser/js/main.js"
                      ));
 
-            bundles.Add(new StyleBundle("~/CssUser").Include(
+                    bundles.Add(new StyleBundle("~/CssUser").Include(
                       "~/Content/DemoUser/css/bootstrap.min.css",
                       "~/Content/DemoUser/css/slick.css",
                       "~/Content/DemoUser/css/slick-theme.css",

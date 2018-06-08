@@ -11,7 +11,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
     @Styles.Render("~/CssAdmin")
+    @Styles.Render("~/CssTable")
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <!-- Site wrapper -->
@@ -51,7 +54,6 @@
                                             <!-- start message -->
                                             <a href="#">
                                                 <div class="pull-left">
-                                                    <img src="~/icon.jpg" class="img-circle" alt="UserImage">
                                                 </div>
                                                 <h4>
                                                     Support Team
@@ -123,13 +125,13 @@
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                
+
                                 <span class="hidden-xs">@User.Identity.GetUserName()</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header">
-                                    <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                   
 
                                     <p>
                                         Alexander Pierce - Web Developer
@@ -495,6 +497,19 @@
         <div class="control-sidebar-bg"></div>
     </div>
     <!-- ./wrapper -->
-    @Scripts.Render("~/JsAdmin")
+    @Scripts.Render("~/JsTable")
+    <script>
+    $(function() {
+        $('#example1').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+    });
+    </script>
+
 </body>
 </html>

@@ -12,7 +12,8 @@ namespace proj.Models
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Categorie
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -30,8 +31,9 @@ namespace proj.Models
             this.refCat = refcat;
             this.nomcatg = nom;
         }
-
+        [Display(Name ="Reference")]
         public string refCat { get; set; }
+        [Display(Name = "Nom")]
         public string nomcatg { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
