@@ -1399,6 +1399,8 @@
     <Content Include="Views\Categories\Details.cshtml" />
     <Content Include="Views\Articles\DetailsAdmin.cshtml" />
     <Content Include="Views\Articles\IndexAdmin.cshtml" />
+    <Content Include="Views\Articles\Edit.cshtml" />
+    <Content Include="Views\Articles\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
