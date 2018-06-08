@@ -13,7 +13,7 @@ namespace proj.Controllers
         {
             return View();
         }
-        [Authorize(Roles = "Admin")]
+       // [Authorize(Roles = "Admin")]
         public ActionResult IndexAdmin()
         {
             return View();
