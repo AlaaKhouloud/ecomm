@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<proj.Models.Article>
 
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutTable.cshtml";
@@ -55,10 +56,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-    
+
 
                                             @foreach (var item in Model)
-                                             {
+                                            {
                                                 <tr role="row" class="odd">
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.designation)
@@ -69,7 +70,7 @@
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.stock)
                                                     </td>
-                                                   
+
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.Categorie.nomcatg)
                                                     </td>
@@ -79,7 +80,7 @@
                                                         @Html.ActionLink("Delete", "Delete", new { id = item.numArticle })
                                                     </td>
                                                 </tr>
-                                             }
+                                            }
                                         </tbody>
                                         <tfoot>
                                             <tr>
