@@ -1,4 +1,5 @@
 ﻿using proj.Models;
+using proj.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,12 @@ namespace proj.Controllers
 {
     public class CategoriesController : Controller
     {
+        CategorieServiceImpl service = new CategorieServiceImpl();
+
         // GET: Categories
         public ActionResult Index()
         {
-            HttpResponseMessage response = ClientCall.client.GetAsync("api/Categories").Result;
-            IEnumerable<Categorie> liste = response.Content.ReadAsAsync<IEnumerable<Categorie>>().Result;
+            IEnumerable<Categorie> liste = service.FinAll();
 
             return View(liste);
         }
@@ -22,11 +24,8 @@ namespace proj.Controllers
         // GET: Categories/Details/5
         public ActionResult Details(string id)
         {
-            
-            Categorie cate = new Categorie();
-            cate.refCat = "gv";
-            cate.nomcatg = "kjn";
-            return View(cate);
+            Categorie categorie = service.FinOne(id);
+            return View(categorie);
         }
 
         // GET: Categories/Create
@@ -39,72 +38,58 @@ namespace proj.Controllers
         [HttpPost]
         public ActionResult Create(Categorie formCollection)
         {
-            try
+            string result = service.Add(formCollection);
+            if (result.Equals("true"))
             {
-                Categorie cat = new Categorie(formCollection.refCat, formCollection.nomcatg);
-                // TODO: Add insert logic here
-                var message = ClientCall.client.PostAsJsonAsync("api/Categories",cat).Result;
-                if (message.IsSuccessStatusCode) return RedirectToAction("Index");
-                else {
-                    ViewData["eror"] = message.ReasonPhrase + " "+message.Content;
-                    return View();
-                }
+                return RedirectToAction("Index");
             }
-            catch
+            else if (result.Equals("false"))
             {
                 return View();
             }
+            ViewData["eror"] = result;
+            return View();
         }
 
         // GET: Categories/Edit/5
         public ActionResult Edit(string id)
         {
-            return View();
+            return View(service.FinOne(id));
         }
 
         // POST: Categories/Edit/5
         [HttpPost]
         public ActionResult Edit(string id, Categorie formcollection)
         {
-            try
+            string result = service.Update(id, formcollection);
+            if (result.Equals("true"))
             {
-                // TODO: Add update logic here
-                Categorie cat = new Categorie(id,formcollection.nomcatg);
-                HttpResponseMessage response = ClientCall.client.PutAsJsonAsync("api/Categories/" + id, cat).Result;
-                if (response.IsSuccessStatusCode) return RedirectToAction("Index");
-                else
-                {
-                    ViewData["eror"] = response.ReasonPhrase + " " + response.Content;
-                    return View();
-                }
+                return RedirectToAction("Index");
             }
-            catch
+            else if (result.Equals("false"))
             {
                 return View();
             }
+            ViewData["eror"] = result;
+            return View();
         }
 
         // GET: Categories/Delete/5
         public ActionResult Delete(string id)
         {
-            return View();
+
+            return View(service.FinOne(id));
         }
 
         // POST: Categories/Delete/5
         [HttpPost]
         public ActionResult Delete(string id, FormCollection collection)
         {
-            try
+            if (service.Remove(id))
             {
-                // TODO: Add delete logic here
-                var message = ClientCall.client.DeleteAsync("api/Categories/" + id).Result;
-
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
     }
 }

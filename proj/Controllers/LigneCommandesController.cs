@@ -20,7 +20,7 @@ namespace proj.Controllers
         }
 
         // GET: LigneCommandes/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int id)
         {
             return View();
         }
@@ -31,22 +31,59 @@ namespace proj.Controllers
             return View();
         }
 
+        public ActionResult AddToPanier(LigneCommande formCollection)
+        {
+            //Ajouter des elements au panier
+            //utiliser des coockies
+
+            try
+            {
+                //Create list of ligncommands
+                List<LigneCommande> data = new List<LigneCommande>();
+                
+                //trouver prix
+                var message = ClientCall.client.PostAsJsonAsync("api/Articles", formCollection.numArticle).Result;
+                Article article = message.Content.ReadAsAsync<Article>().Result;
+                formCollection.totalPrice = double.Parse(article.prixU) * formCollection.QteArticle;
+                //
+
+                data.Add(formCollection);
+
+                // convertir en un string pour permettre le stockage dans la coockie
+                var monpanier = String.Join(",", data);
+                // store cookie and redirect
+                Response.Cookies.Add(new HttpCookie("monpanier", monpanier));
+
+                return RedirectToAction("Index");
+
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
         // POST: LigneCommandes/Create
         [HttpPost]
         public ActionResult Create(LigneCommande formCollection)
         {
+            //insert coockies/panier stuff into db and asscoiate commands to it
             try
             {
-                
-                LigneCommande cat = new LigneCommande(formCollection.numLigne, formCollection.QteArticle, formCollection.totalPrice, formCollection.numCmd, formCollection.numArticle, formCollection.Article, formCollection.Commande);
                 // TODO: Add insert logic here
-                var message = ClientCall.client.PostAsJsonAsync("api/LigneCommandes", cat).Result;
-                if (message.IsSuccessStatusCode) return RedirectToAction("Index");
-                else
-                {
-                    ViewData["eror"] = message.ReasonPhrase + " " + message.Content;
-                    return View();
-                }
+                //read monpanier to insert in into db after verification
+                // Your cookie exists - grab your value and create your List
+                // List<LigneCommande> panier = Request.Cookies["monpanier"].Value.Split(',').Select(x=>).ToList();
+
+
+                // var message = ClientCall.client.PostAsJsonAsync("api/LigneCommandes", ligne).Result;
+                //if (message.IsSuccessStatusCode) return RedirectToAction("Index");
+                //else
+                //{
+                //    ViewData["eror"] = message.ReasonPhrase + " " + message.Content;
+                //    return View();
+                //}
+                return View();
             }
             catch
             {
@@ -55,21 +92,26 @@ namespace proj.Controllers
         }
 
         // GET: LigneCommandes/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
+
             return View();
         }
 
         // POST: LigneCommandes/Edit/5
         [HttpPost]
-        public ActionResult Edit(string id, LigneCommande formCollection)
+        public ActionResult Edit(int id, LigneCommande collection)
         {
-            int id2 = Convert.ToInt32(id);
             try
             {
-                // TODO: Add update logic here
-                LigneCommande cat = new LigneCommande(id2, formCollection.QteArticle, formCollection.totalPrice, formCollection.numCmd, formCollection.numArticle, formCollection.Article, formCollection.Commande);
-                HttpResponseMessage response = ClientCall.client.PutAsJsonAsync("api/LigneCommandes/" + id, cat).Result;
+                
+                //trouver prix
+                var message = ClientCall.client.PostAsJsonAsync("api/Articles", collection.numArticle).Result;
+                Article article = message.Content.ReadAsAsync<Article>().Result;
+                collection.totalPrice = double.Parse(article.prixU) * collection.QteArticle;
+                //
+                collection.numLigne = id;
+                HttpResponseMessage response = ClientCall.client.PutAsJsonAsync("api/LigneCommandes/" + id, collection).Result;
                 if (response.IsSuccessStatusCode) return RedirectToAction("Index");
                 else
                 {
@@ -83,7 +125,6 @@ namespace proj.Controllers
             }
         }
 
-
         // GET: LigneCommandes/Delete/5
         public ActionResult Delete(int id)
         {
@@ -92,14 +133,12 @@ namespace proj.Controllers
 
         // POST: LigneCommandes/Delete/5
         [HttpPost]
-        public ActionResult Delete(string id, FormCollection collection)
+        public ActionResult Delete(int id, FormCollection collection)
         {
-            int id2 = Convert.ToInt32(id);
             try
             {
                 // TODO: Add delete logic here
-                var message = ClientCall.client.DeleteAsync("api/LigneCommandes/" + id2).Result;
-
+                var message = ClientCall.client.DeleteAsync("api/LigneCommandes/" + id).Result;
                 return RedirectToAction("Index");
             }
             catch

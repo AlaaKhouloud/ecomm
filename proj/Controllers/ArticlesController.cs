@@ -1,4 +1,5 @@
 ﻿using proj.Models;
+using proj.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,41 +11,32 @@ namespace proj.Controllers
 {
     public class ArticlesController : Controller
     {
+        IArticlesSercice _service;
+
+        public ArticlesController(IArticlesSercice service)
+        {
+            _service = service;
+        }
+        public ArticlesController()
+        {
+            _service = new ArticleImpl();
+        }
+
         // GET: Articles
         public ActionResult Index()
         {
-            HttpResponseMessage response = ClientCall.client.GetAsync("api/Articles").Result;
-            IEnumerable<Article> liste = response.Content.ReadAsAsync<IEnumerable<Article>>().Result;
-
-            return View(liste);
-        }
-
-        public ActionResult IndexAdmin()
-        {
-            HttpResponseMessage response = ClientCall.client.GetAsync("api/Articles").Result;
-            IEnumerable<Article> liste = response.Content.ReadAsAsync<IEnumerable<Article>>().Result;
-
-            return View(liste);
+            return View(_service.FinAll());
         }
 
         // GET: Articles/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int id)
         {
-            return View();
-        }
-
-        public ActionResult DetailsAdmin(string id)
-        {
-            
-            return View();
+            return View(_service.FinOne(id.ToString()));
         }
 
         // GET: Articles/Create
         public ActionResult Create()
         {
-            HttpResponseMessage response = ClientCall.client.GetAsync("api/Categories").Result;
-            IEnumerable<Categorie> liste = response.Content.ReadAsAsync<IEnumerable<Categorie>>().Result;
-            ViewBag.refCat = new SelectList(liste, "refCat", "nomcatg");
             return View();
         }
 
@@ -52,76 +44,57 @@ namespace proj.Controllers
         [HttpPost]
         public ActionResult Create(Article formCollection)
         {
-            try
+            string result = _service.Add(formCollection);
+            if (result.Equals("true"))
             {
-                Article cat = new Article(formCollection.numArticle,formCollection.designation,formCollection.prixU,formCollection.stock,formCollection.photo,formCollection.refCat,formCollection.Categorie,formCollection.LigneCommandes);
-                // TODO: Add insert logic here
-                var message = ClientCall.client.PostAsJsonAsync("api/Articles", cat).Result;
-                if (message.IsSuccessStatusCode) return RedirectToAction("Index");
-                else
-                {
-                    ViewData["eror"] = message.ReasonPhrase + " " + message.Content;
-                    return View();
-                }
+                return RedirectToAction("Index");
             }
-            catch
+            else if (result.Equals("false"))
             {
                 return View();
             }
+            ViewData["eror"] = result;
+            return View();
         }
 
         // GET: Articles/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
-            return View();
+            return View(_service.FinOne(id.ToString()));
         }
 
         // POST: Articles/Edit/5
         [HttpPost]
-        public ActionResult Edit(string id, Article formCollection)
+        public ActionResult Edit(int id, Article formcollection)
         {
-            int id2 = Convert.ToInt32(id);
-            try
+            string result = _service.Update(id.ToString(), formcollection);
+            if (result.Equals("true"))
             {
-                // TODO: Add update logic here
-                Article cat = new Article(id2, formCollection.designation, formCollection.prixU, formCollection.stock, formCollection.photo, formCollection.refCat, formCollection.Categorie, formCollection.LigneCommandes);
-                HttpResponseMessage response = ClientCall.client.PutAsJsonAsync("api/Articles/" + id, cat).Result;
-                if (response.IsSuccessStatusCode) return RedirectToAction("Index");
-                else
-                {
-                    ViewData["eror"] = response.ReasonPhrase + " " + response.Content;
-                    return View();
-                }
+                return RedirectToAction("Index");
             }
-            catch
+            else if (result.Equals("false"))
             {
                 return View();
             }
+            ViewData["eror"] = result;
+            return View();
         }
-    
 
         // GET: Articles/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(_service.FinOne(id.ToString()));
         }
 
         // POST: Articles/Delete/5
         [HttpPost]
-        public ActionResult Delete(string id, FormCollection collection)
+        public ActionResult Delete(int id, FormCollection collection)
         {
-            int id2 = Convert.ToInt32(id);
-            try
+            if (_service.Remove(id.ToString()))
             {
-                // TODO: Add delete logic here
-                var message = ClientCall.client.DeleteAsync("api/Articles/" + id2).Result;
-
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
     }
 }

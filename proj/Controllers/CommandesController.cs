@@ -1,5 +1,5 @@
-﻿using proj.Models;
-using proj.Service;
+﻿using Microsoft.AspNet.Identity;
+using proj.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,29 +11,18 @@ namespace proj.Controllers
 {
     public class CommandesController : Controller
     {
-        ICommande _service;
-
-        public CommandesController(ICommande service)
-        {
-            _service = service;
-        }
-
-        public CommandesController()
-        {
-            _service = new CommandeImpl();
-        }
-
         // GET: Commandes
-        public ViewResult Index()
+        public ActionResult Index()
         {
-          
-            return View("Index", _service.FIndAll());
+            HttpResponseMessage response = ClientCall.client.GetAsync("api/Commandes").Result;
+            IEnumerable<Commande> liste = response.Content.ReadAsAsync<IEnumerable<Commande>>().Result;
+            return View(liste);
         }
 
         // GET: Commandes/Details/5
-        public ViewResult Details(int id)
+        public ActionResult Details(int id)
         {
-            return View("Details", _service.GetCommande(id));
+            return View();
         }
 
         // GET: Commandes/Create
@@ -48,9 +37,15 @@ namespace proj.Controllers
         {
             try
             {
-                Commande cat = new Commande(formCollection.numCmd, formCollection.dateCmd, formCollection.idClient, formCollection.AspNetUser,formCollection.LigneCommandes);
+                //TO call before creation of ligne commande
+
                 // TODO: Add insert logic here
-                var message = ClientCall.client.PostAsJsonAsync("api/Commandes", cat).Result;
+                Commande commande = new Commande();
+                commande.dateCmd = DateTime.Now.ToString();
+                commande.idClient = User.Identity.GetUserId();
+
+                // TODO: Add insert logic here
+                var message = ClientCall.client.PostAsJsonAsync("api/Commandes", commande).Result;
                 if (message.IsSuccessStatusCode) return RedirectToAction("Index");
                 else
                 {
@@ -67,32 +62,24 @@ namespace proj.Controllers
         // GET: Commandes/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(_service.GetCommande(id));
+            return View();
         }
 
         // POST: Commandes/Edit/5
         [HttpPost]
-        public ActionResult Edit(string id, Commande formCollection)
+        public ActionResult Edit(int id, Commande collection)
         {
-            int id2 = Convert.ToInt32(id);
             try
             {
                 // TODO: Add update logic here
-                Commande cat = new Commande(id2, formCollection.dateCmd, formCollection.idClient, formCollection.AspNetUser, formCollection.LigneCommandes);
-                HttpResponseMessage response = ClientCall.client.PutAsJsonAsync("api/Commandes/" + id, cat).Result;
-                if (response.IsSuccessStatusCode) return RedirectToAction("Index");
-                else
-                {
-                    ViewData["eror"] = response.ReasonPhrase + " " + response.Content;
-                    return View();
-                }
+                //on ne modifie pas une commande on modifie la ligne commande
+                return RedirectToAction("Index");
             }
             catch
             {
                 return View();
             }
         }
-
 
         // GET: Commandes/Delete/5
         public ActionResult Delete(int id)
@@ -102,13 +89,12 @@ namespace proj.Controllers
 
         // POST: Commandes/Delete/5
         [HttpPost]
-        public ActionResult Delete(string id, FormCollection collection)
+        public ActionResult Delete(int id, Commande collection)
         {
-            int id2 = Convert.ToInt32(id);
             try
             {
                 // TODO: Add delete logic here
-                var message = ClientCall.client.DeleteAsync("api/Commandes/" + id2).Result;
+                var message = ClientCall.client.DeleteAsync("api/Commandes/" + id).Result;
 
                 return RedirectToAction("Index");
             }

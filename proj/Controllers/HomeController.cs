@@ -13,11 +13,7 @@ namespace proj.Controllers
         {
             return View();
         }
-       // [Authorize(Roles = "Admin")]
-        public ActionResult IndexAdmin()
-        {
-            return View();
-        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -32,7 +28,7 @@ namespace proj.Controllers
             return View();
         }
 
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Administration()
         {
             ViewBag.Message = "Your admin panel.";
