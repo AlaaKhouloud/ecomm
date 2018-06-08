@@ -1396,6 +1396,9 @@
     <Content Include="Views\Home\IndexAdmin.cshtml" />
     <Content Include="Views\Articles\Create.cshtml" />
     <Content Include="Views\Shared\_LayoutTable.cshtml" />
+    <Content Include="Views\Categories\Details.cshtml" />
+    <Content Include="Views\Articles\DetailsAdmin.cshtml" />
+    <Content Include="Views\Articles\IndexAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

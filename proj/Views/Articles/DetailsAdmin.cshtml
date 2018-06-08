@@ -1,0 +1,27 @@
+﻿@model proj.Models.Categorie
+
+@{
+    ViewBag.Title = "DetailsAdmin";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>DetailsAdmin</h2>
+
+<div>
+    <h4>Categorie</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nomcatg)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nomcatg)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.refCat }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

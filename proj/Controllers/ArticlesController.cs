@@ -19,15 +19,32 @@ namespace proj.Controllers
             return View(liste);
         }
 
+        public ActionResult IndexAdmin()
+        {
+            HttpResponseMessage response = ClientCall.client.GetAsync("api/Articles").Result;
+            IEnumerable<Article> liste = response.Content.ReadAsAsync<IEnumerable<Article>>().Result;
+
+            return View(liste);
+        }
+
         // GET: Articles/Details/5
         public ActionResult Details(string id)
         {
             return View();
         }
 
+        public ActionResult DetailsAdmin(string id)
+        {
+            
+            return View();
+        }
+
         // GET: Articles/Create
         public ActionResult Create()
         {
+            HttpResponseMessage response = ClientCall.client.GetAsync("api/Categories").Result;
+            IEnumerable<Categorie> liste = response.Content.ReadAsAsync<IEnumerable<Categorie>>().Result;
+            ViewBag.refCat = new SelectList(liste, "refCat", "nomcatg");
             return View();
         }
 

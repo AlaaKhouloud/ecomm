@@ -22,7 +22,11 @@ namespace proj.Controllers
         // GET: Categories/Details/5
         public ActionResult Details(string id)
         {
-            return View();
+            
+            Categorie cate = new Categorie();
+            cate.refCat = "gv";
+            cate.nomcatg = "kjn";
+            return View(cate);
         }
 
         // GET: Categories/Create
