@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@model  IEnumerable<proj.Models.Categorie>
+
+<p>
+    <a href="Categories/Create">Create</a>
+</p>
+<div class="row">
+
+    <div class="col-md-4">
+
+        <table border="1">
+            <tr>
+                <td>reference</td>
+                <td>nom</td>
+                <td></td>
+                <td></td>
+            </tr>
+            @foreach(var m in Model)
+            {
+            <tr>
+                <td>@m.refCat</td>
+                <td>@m.nomcatg</td>
+                <td><a href="Delete?id=@m.refCat">Delete</a></td>
+                <td><a href="Categories/Edit?id=@m.refCat">Update</a></td>
+            </tr>
+            }
+        </table>
+    </div>
+</div>

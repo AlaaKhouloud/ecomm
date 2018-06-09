@@ -1,0 +1,11 @@
+﻿@model proj.Models.others.UserView
+
+<div class="category-nav">
+    <span class="category-header">Categories <i class="fa fa-list"></i></span>
+    <ul class="category-list">
+        @foreach (var item in Model.categories)
+        {
+           <li><a href="/Articles/">@item.nomcatg</a></li>
+        }
+    </ul>
+</div>
