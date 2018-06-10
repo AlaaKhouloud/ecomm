@@ -1,18 +1,23 @@
-﻿using System;
+﻿using api.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http.Description;
 using System.Web.Mvc;
 
 namespace api.Controllers
 {
     public class HomeController : Controller
     {
+        private ASPPROJEntities db = new ASPPROJEntities();
+
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
 
             return View();
         }
+
     }
 }

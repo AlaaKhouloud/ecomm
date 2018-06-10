@@ -5,7 +5,7 @@
     <ul class="category-list">
         @foreach (var item in Model.categories)
         {
-           <li><a href="/Articles/">@item.nomcatg</a></li>
+            <li><a href="@Url.Action("Details", "Articles")?id=@item.refCat">@item.nomcatg</a></li>
         }
     </ul>
 </div>

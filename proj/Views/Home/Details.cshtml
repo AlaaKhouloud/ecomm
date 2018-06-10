@@ -1,7 +1,7 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,7 +32,6 @@
         <![endif]-->
 
 </head>
-
 <body>
     <!-- HEADER -->
     <header>
@@ -67,7 +66,7 @@
         </div>
         <!-- /top Header -->
         <!--Header-->
-        @Html.Partial("~/Views/Home/_PartialHeaderIndex.cshtml")
+        @Html.Partial("_PartialHeaderIndex")
         <!-- header -->
         <!-- container -->
     </header>
@@ -77,12 +76,15 @@
         <!-- container -->
         <div class="container">
             <div id="responsive-nav">
+                <!-- category nav -->
+                @Html.Partial("_PartialNavCategorie")
+                <!-- /category nav -->
                 <!-- menu nav -->
                 <div class="menu-nav">
                     <span class="menu-header">Menu <i class="fa fa-bars"></i></span>
                     <ul class="menu-list">
                         <li><a href="/Home">Accueil</a></li>
-                        <li><a href="#">Articles</a></li> 
+                        <li><a href="/Articles">Articles</a></li>
                     </ul>
                 </div>
                 <!-- menu nav -->
@@ -91,7 +93,10 @@
         <!-- /container -->
     </div>
     <!-- /NAVIGATION -->
-  
+    <!-- HOME -->
+    <!-- /HOME -->
+    <!-- section -->
+    <!-- /section -->
     <!-- section -->
     <div class="section">
         <!-- container -->
@@ -101,12 +106,12 @@
                 <!-- section title -->
                 <div class="col-md-12">
                     <div class="section-title">
-                        <h2 class="title">Nos Articles</h2>
+                        <h2 class="title">Articles Les Plus Vendus</h2>
                     </div>
                 </div>
                 <!-- section title -->
                 <!-- Product Single -->
-                @Html.Partial("_PartialIndexArticles2")
+                @* @Html.Partial("_PartialDetailsArticle")*@
                 <!-- /Product Single -->
 
             </div>

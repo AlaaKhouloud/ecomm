@@ -1,4 +1,6 @@
-﻿using proj.Models;
+﻿using Microsoft.AspNet.Identity;
+using proj.Models;
+using proj.Models.others;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,14 +17,80 @@ namespace proj.Controllers
         {
             HttpResponseMessage response = ClientCall.client.GetAsync("api/Articles").Result;
             IEnumerable<Article> liste = response.Content.ReadAsAsync<IEnumerable<Article>>().Result;
+            HttpResponseMessage response2 = ClientCall.client.GetAsync("api/Categories").Result;
+            IEnumerable<Categorie> liste2 = response2.Content.ReadAsAsync<IEnumerable<Categorie>>().Result;
+            HttpResponseMessage response3 = ClientCall.client.GetAsync("api/LigneCommandes").Result;
+            IEnumerable<LigneCommande> liste3 = response3.Content.ReadAsAsync<IEnumerable<LigneCommande>>().Result;
+            HttpResponseMessage response4 = ClientCall.client.GetAsync("api/Commandes/" + User.Identity.GetUserId()).Result;
+            IEnumerable<Commande> liste4 = response4.Content.ReadAsAsync<IEnumerable<Commande>>().Result;
+            foreach (var item in liste3.ToList())
+            {
+                foreach (var item2 in liste.ToList())
+                {
+                    if (item.numArticle == item2.numArticle)
+                    {
+                        item.Article = new Article();
+                        item.Article.photo = item2.photo;
+                        item.Article.designation = item2.designation;
+                    }
+                }
+            }
+            UserView vu = new UserView();
+            vu.articles = liste;
+            vu.categories = liste2;
+            vu.ligneCommandes = liste3;
+            vu.Commandes = liste4;
+            return View(vu);
 
-            return View(liste);
         }
 
         // GET: Articles/Details/5
         public ActionResult Details(string id)
         {
-            return View();
+            HttpResponseMessage response = ClientCall.client.GetAsync("api/Articles").Result;
+            IEnumerable<Article> liste = response.Content.ReadAsAsync<IEnumerable<Article>>().Result;
+            HttpResponseMessage response2 = ClientCall.client.GetAsync("api/Categories").Result;
+            IEnumerable<Categorie> liste2 = response2.Content.ReadAsAsync<IEnumerable<Categorie>>().Result;
+            HttpResponseMessage response3 = ClientCall.client.GetAsync("api/LigneCommandes").Result;
+            IEnumerable<LigneCommande> liste3 = response3.Content.ReadAsAsync<IEnumerable<LigneCommande>>().Result;
+            HttpResponseMessage response4 = ClientCall.client.GetAsync("api/Commandes/" + User.Identity.GetUserId()).Result;
+            IEnumerable<Commande> liste4 = response4.Content.ReadAsAsync<IEnumerable<Commande>>().Result;
+            foreach (var item in liste3.ToList())
+            {
+                foreach (var item2 in liste.ToList())
+                {
+                    if (item.numArticle == item2.numArticle)
+                    {
+                        item.Article = new Article();
+                        item.Article.photo = item2.photo;
+                        item.Article.designation = item2.designation;
+                    }
+                }
+            }
+
+            List<Article> search = new List<Article>();
+            Article art = new Article();
+            foreach (var item in liste.ToList())
+            {
+                if(item.refCat == id)
+                {
+                    art.numArticle = item.numArticle;
+                    art.photo = item.photo;
+                    art.prixU = item.prixU;
+                    art.stock = item.stock;
+                    art.refCat = item.refCat;
+                    art.designation = item.designation;
+                    search.Add(art);
+                }
+            }
+
+            UserView vu = new UserView();
+            vu.articles = liste;
+            vu.categories = liste2;
+            vu.ligneCommandes = liste3;
+            vu.Commandes = liste4;
+            vu.searchbycat = search;
+            return View(vu);
         }
 
         // GET: Articles/Create

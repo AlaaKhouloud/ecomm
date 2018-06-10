@@ -1,0 +1,65 @@
+﻿
+@model proj.Models.others.UserView
+
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!--  Product Details -->
+            <div class="product product-details clearfix">
+                <div class="col-md-6">
+                    <div id="product-main-view">
+                        <div class="product-view">
+                            <img src="../Content/DemoUser/img/main-product01.jpg" alt="">
+                        </div>
+                        <div class="product-view">
+                            <img src="../Content/DemoUser/img/main-product02.jpg" alt="">
+                        </div>
+                        <div class="product-view">
+                            <img src="../Content/DemoUser/img/main-product03.jpg" alt="">
+                        </div>
+                        <div class="product-view">
+                            <img src="../Content/DemoUser/img/main-product04.jpg" alt="">
+                        </div>
+                    </div>
+                    <div id="product-view">
+                        <div class="product-view">
+                            <img src="../Content/DemoUser/img/thumb-product01.jpg" alt="">
+                        </div>
+                        <div class="product-view">
+                            <img src="../Content/DemoUser/img/thumb-product02.jpg" alt="">
+                        </div>
+                        <div class="product-view">
+                            <img src="../Content/DemoUser/img/thumb-product03.jpg" alt="">
+                        </div>
+                        <div class="product-view">
+                            <img src="../Content/DemoUser/img/thumb-product04.jpg" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="product-body">
+                        <div class="product-label">
+                            <span>New</span>
+                            <span class="sale">-20%</span>
+                        </div>
+                        <h2 class="product-name">@Model.designation</h2>
+                        <h3 class="product-price">@Model.prixU</h3>
+
+                    </div>
+                    <p>@Model.stock Pi-ces disponibles</p>
+                    <div class="product-btns">
+                        <div class="qty-input">
+                            <span class="text-uppercase">QTY: </span>
+                            <input class="input" type="number">
+                        </div>
+                        <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

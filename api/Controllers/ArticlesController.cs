@@ -24,18 +24,16 @@ namespace api.Controllers
             return db.Articles;
         }
 
+
         // GET: api/Articles/5
         [ResponseType(typeof(Article))]
-        public IHttpActionResult GetArticle(int id)
+        public Article GetArticle(int id)
         {
             Article article = db.Articles.Find(id);
-            if (article == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(article);
+            return article;
         }
+
+
 
         // PUT: api/Articles/5
         [ResponseType(typeof(void))]

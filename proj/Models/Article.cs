@@ -9,6 +9,7 @@
 
 namespace proj.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -38,9 +39,11 @@ namespace proj.Models
         public Nullable<int> stock { get; set; }
         public string photo { get; set; }
         public string refCat { get; set; }
-    
+
+        [JsonIgnore]
         public virtual Categorie Categorie { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonIgnore]
         public virtual ICollection<LigneCommande> LigneCommandes { get; set; }
     }
 }

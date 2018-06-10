@@ -1,0 +1,44 @@
+﻿
+
+@model proj.Models.others.UserView
+ 
+<!-- section -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            @foreach (var item in Model.searchbycat)
+            {
+                <!-- Product Single -->
+                <div class="col-md-3 col-sm-6 col-xs-6">
+                    <div class="product product-single">
+                        <div class="product-thumb">
+                            <div class="product-label">
+                            </div>
+                            <button class="main-btn quick-view" type="submit" onclick="location.href='@Url.Action("Details","Home")?id=@item.numArticle'"><i class="fa fa-search-plus"></i> Details</button>
+                            <img src="../Content/DemoUser/img/@item.photo" alt="">
+                        </div>
+                        <div class="product-body">
+                            <h3 class="product-price">@item.prixU DH<del class="product-old-price"></del></h3>
+                            <div class="product-rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o empty"></i>
+                            </div>
+                            <h2 class="product-name"><a href="#">@item.designation</a></h2>
+                            <div class="product-btns">
+                                <h4 class="product-price">Quantité</h4> <input type="number" id="qte" /><hr />
+                                <button class="primary-btn add-to-cart" type="submit" onclick="location.href='@Url.Action("Create","LigneCommandes")?id=@item.numArticle&qte='+document.getElementById('qte').value"><i class="fa fa-shopping-cart"></i>Ajouter au panier</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Product Single -->
+                </div>
+            }
+        </div>
+        <!-- /row -->
+    </div>
+</div>

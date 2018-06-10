@@ -1402,11 +1402,15 @@
     <Content Include="Views\Home\_PartialHeaderIndex.cshtml" />
     <Content Include="Views\Home\_PartialNavCategorie.cshtml" />
     <Content Include="Views\Home\_PartialIndexArticles.cshtml" />
+    <Content Include="Views\LigneCommandes\Create.cshtml" />
+    <Content Include="Views\Home\Details.cshtml" />
+    <Content Include="Views\Home\_PartialDetailsArticle.cshtml" />
+    <Content Include="Views\Articles\_PartialIndexArticles2.cshtml" />
+    <Content Include="Views\Articles\_PartialSearchArticles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Commandes\" />
-    <Folder Include="Views\LigneCommandes\" />
     <Folder Include="Views\Roles\" />
     <Folder Include="Views\Users\" />
   </ItemGroup>

@@ -9,20 +9,15 @@
 
 namespace proj.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
     public partial class LigneCommande
     {
-        public LigneCommande(int numLigne, int? qteArticle, double? totalPrice, int? numCmd, int? numArticle, Article article, Commande commande)
+        public LigneCommande()
         {
-            this.numLigne = numLigne;
-            QteArticle = qteArticle;
-            this.totalPrice = totalPrice;
-            this.numCmd = numCmd;
-            this.numArticle = numArticle;
-            Article = article;
-            Commande = commande;
+            this.Commande = new Commande();
         }
 
         public int numLigne { get; set; }
@@ -30,8 +25,10 @@ namespace proj.Models
         public Nullable<double> totalPrice { get; set; }
         public Nullable<int> numCmd { get; set; }
         public Nullable<int> numArticle { get; set; }
-    
+
+        [JsonIgnore]
         public virtual Article Article { get; set; }
+        [JsonIgnore]
         public virtual Commande Commande { get; set; }
     }
 }

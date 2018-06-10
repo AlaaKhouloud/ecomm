@@ -23,16 +23,10 @@ namespace api.Controllers
         }
 
         // GET: api/Commandes/5
-        [ResponseType(typeof(Commande))]
-        public IHttpActionResult GetCommande(int id)
+        [ResponseType(typeof(IEnumerable<Commande>))]
+        public IEnumerable<Commande> GetCommande(string id)
         {
-            Commande commande = db.Commandes.Find(id);
-            if (commande == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(commande);
+            return db.Commandes.Where(c=>c.idClient == id).ToList();
         }
 
         // PUT: api/Commandes/5

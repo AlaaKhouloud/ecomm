@@ -9,6 +9,7 @@
 
 namespace api.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -20,7 +21,10 @@ namespace api.Models
         public Nullable<int> numCmd { get; set; }
         public Nullable<int> numArticle { get; set; }
     
+        [JsonIgnore]
         public virtual Article Article { get; set; }
+        [JsonIgnore]
+
         public virtual Commande Commande { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using proj.Models;
+﻿using Microsoft.AspNet.Identity;
+using proj.Models;
 using proj.Service;
 using System;
 using System.Collections.Generic;
@@ -43,25 +44,9 @@ namespace proj.Controllers
         }
 
         // POST: Commandes/Create
-        [HttpPost]
         public ActionResult Create(Commande formCollection)
-        {
-            try
-            {
-                Commande cat = new Commande(formCollection.numCmd, formCollection.dateCmd, formCollection.idClient, formCollection.AspNetUser,formCollection.LigneCommandes);
-                // TODO: Add insert logic here
-                var message = ClientCall.client.PostAsJsonAsync("api/Commandes", cat).Result;
-                if (message.IsSuccessStatusCode) return RedirectToAction("Index");
-                else
-                {
-                    ViewData["eror"] = message.ReasonPhrase + " " + message.Content;
-                    return View();
-                }
-            }
-            catch
-            {
-                return View();
-            }
+        { 
+              return RedirectToAction("Index", "Home");
         }
 
         // GET: Commandes/Edit/5

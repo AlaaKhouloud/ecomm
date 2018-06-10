@@ -9,6 +9,7 @@
 
 namespace api.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -24,8 +25,10 @@ namespace api.Models
         public string dateCmd { get; set; }
         public string idClient { get; set; }
     
+        [JsonIgnore]
         public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonIgnore]
         public virtual ICollection<LigneCommande> LigneCommandes { get; set; }
     }
 }
