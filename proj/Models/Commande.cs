@@ -11,7 +11,8 @@ namespace proj.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Commande
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -28,7 +29,7 @@ namespace proj.Models
             AspNetUser = aspNetUser;
             LigneCommandes = ligneCommandes;
         }
-
+        [Key]
         public int numCmd { get; set; }
         public string dateCmd { get; set; }
         public string idClient { get; set; }

@@ -10,6 +10,7 @@ namespace proj.Controllers
 {
     public class CategoriesController : Controller
     {
+        private ASPPROJEntities db = new ASPPROJEntities();
         // GET: Categories
         public ActionResult Index()
         {
@@ -92,19 +93,25 @@ namespace proj.Controllers
 
         // POST: Categories/Delete/5
         [HttpPost]
-        public ActionResult Delete(string id, FormCollection collection)
+        public ActionResult Delete(string id,Categorie c)
         {
             try
             {
-                // TODO: Add delete logic here
-                var message = ClientCall.client.DeleteAsync("api/Categories/" + id).Result;
-
-                return RedirectToAction("Index");
+               
+                HttpResponseMessage response = ClientCall.client.DeleteAsync("api/Categories/" + id).Result;
+                if (response.IsSuccessStatusCode) return RedirectToAction("Index");
+                else
+                {
+                    ViewData["eror"] = response.ReasonPhrase + " " + response.Content;
+                    return View();
+                }
             }
             catch
             {
                 return View();
             }
+           
+            
         }
     }
 }

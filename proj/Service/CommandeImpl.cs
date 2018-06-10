@@ -12,6 +12,7 @@ namespace proj.Service
        
         public IEnumerable<Commande> FIndAll()
         {
+
             HttpResponseMessage response = ClientCall.client.GetAsync("api/Commandes").Result;
             IEnumerable<Commande> liste = response.Content.ReadAsAsync<IEnumerable<Commande>>().Result;
             return liste;

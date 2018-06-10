@@ -11,7 +11,8 @@ namespace proj.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class LigneCommande
     {
         public LigneCommande(int numLigne, int? qteArticle, double? totalPrice, int? numCmd, int? numArticle, Article article, Commande commande)
@@ -24,7 +25,7 @@ namespace proj.Models
             Article = article;
             Commande = commande;
         }
-
+        [Key]
         public int numLigne { get; set; }
         public Nullable<int> QteArticle { get; set; }
         public Nullable<double> totalPrice { get; set; }

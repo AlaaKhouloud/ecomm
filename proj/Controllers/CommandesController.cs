@@ -1,121 +1,135 @@
-﻿using proj.Models;
-using proj.Service;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
-using System.Net.Http;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using proj.Models;
 
 namespace proj.Controllers
 {
     public class CommandesController : Controller
     {
-        ICommande _service;
-
-        public CommandesController(ICommande service)
-        {
-            _service = service;
-        }
-
-        public CommandesController()
-        {
-            _service = new CommandeImpl();
-        }
+        private ASPPROJEntities db = new ASPPROJEntities();
 
         // GET: Commandes
-        public ViewResult Index()
+        public ActionResult Index()
         {
-          
-            return View("Index", _service.FIndAll());
+            var commandes = db.Commandes.Include(c => c.AspNetUser);
+            return View(commandes.ToList());
         }
 
         // GET: Commandes/Details/5
-        public ViewResult Details(int id)
+        public ActionResult Details(int? id)
         {
-            return View("Details", _service.GetCommande(id));
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Commande commande = db.Commandes.Find(id);
+            if (commande == null)
+            {
+                return HttpNotFound();
+            }
+           
+
+
+            return View(commande);
         }
 
         // GET: Commandes/Create
         public ActionResult Create()
         {
+            ViewBag.idClient = new SelectList(db.AspNetUsers, "Id", "Email");
             return View();
         }
 
         // POST: Commandes/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create(Commande formCollection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "numCmd,dateCmd,idClient")] Commande commande)
         {
-            try
+            if (ModelState.IsValid)
             {
-                Commande cat = new Commande(formCollection.numCmd, formCollection.dateCmd, formCollection.idClient, formCollection.AspNetUser,formCollection.LigneCommandes);
-                // TODO: Add insert logic here
-                var message = ClientCall.client.PostAsJsonAsync("api/Commandes", cat).Result;
-                if (message.IsSuccessStatusCode) return RedirectToAction("Index");
-                else
-                {
-                    ViewData["eror"] = message.ReasonPhrase + " " + message.Content;
-                    return View();
-                }
+                db.Commandes.Add(commande);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            ViewBag.idClient = new SelectList(db.AspNetUsers, "Id", "Email", commande.idClient);
+            return View(commande);
         }
 
         // GET: Commandes/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View(_service.GetCommande(id));
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Commande commande = db.Commandes.Find(id);
+            if (commande == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.idClient = new SelectList(db.AspNetUsers, "Id", "Email", commande.idClient);
+            return View(commande);
         }
 
         // POST: Commandes/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Edit(string id, Commande formCollection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "numCmd,dateCmd,idClient")] Commande commande)
         {
-            int id2 = Convert.ToInt32(id);
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
-                Commande cat = new Commande(id2, formCollection.dateCmd, formCollection.idClient, formCollection.AspNetUser, formCollection.LigneCommandes);
-                HttpResponseMessage response = ClientCall.client.PutAsJsonAsync("api/Commandes/" + id, cat).Result;
-                if (response.IsSuccessStatusCode) return RedirectToAction("Index");
-                else
-                {
-                    ViewData["eror"] = response.ReasonPhrase + " " + response.Content;
-                    return View();
-                }
+                db.Entry(commande).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            ViewBag.idClient = new SelectList(db.AspNetUsers, "Id", "Email", commande.idClient);
+            return View(commande);
         }
 
-
         // GET: Commandes/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Commande commande = db.Commandes.Find(id);
+            if (commande == null)
+            {
+                return HttpNotFound();
+            }
+            return View(commande);
         }
 
         // POST: Commandes/Delete/5
-        [HttpPost]
-        public ActionResult Delete(string id, FormCollection collection)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
         {
-            int id2 = Convert.ToInt32(id);
-            try
-            {
-                // TODO: Add delete logic here
-                var message = ClientCall.client.DeleteAsync("api/Commandes/" + id2).Result;
+            Commande commande = db.Commandes.Find(id);
+            db.Commandes.Remove(commande);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
-                return RedirectToAction("Index");
-            }
-            catch
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
             {
-                return View();
+                db.Dispose();
             }
+            base.Dispose(disposing);
         }
     }
 }

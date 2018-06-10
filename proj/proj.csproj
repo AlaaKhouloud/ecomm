@@ -1401,10 +1401,14 @@
     <Content Include="Views\Articles\IndexAdmin.cshtml" />
     <Content Include="Views\Articles\Edit.cshtml" />
     <Content Include="Views\Articles\Delete.cshtml" />
+    <Content Include="Views\Commandes\Create.cshtml" />
+    <Content Include="Views\Commandes\Delete.cshtml" />
+    <Content Include="Views\Commandes\Details.cshtml" />
+    <Content Include="Views\Commandes\Edit.cshtml" />
+    <Content Include="Views\Commandes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Commandes\" />
     <Folder Include="Views\LigneCommandes\" />
     <Folder Include="Views\Roles\" />
     <Folder Include="Views\Users\" />
