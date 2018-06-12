@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper" style="min-height: 990px;">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h4>Statistiques</h4>
+
+
+                        <img src="@Url.Action("PieChart")" />
+                        
+                        <img src="@Url.Action("ColumnChart")" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
