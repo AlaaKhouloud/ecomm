@@ -13,6 +13,27 @@ namespace proj.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult IndexAdmin()
+        {
+            HttpResponseMessage response2 = ClientCall.client.GetAsync("api/Categories").Result;
+            IEnumerable<Categorie> liste2 = response2.Content.ReadAsAsync<IEnumerable<Categorie>>().Result;
+            ViewBag.f = new SelectList(liste2, "refCat", "nomcatg");
+            return View();
+        }
+
+        private ASPPROJEntities db = new ASPPROJEntities();
+
+        public JsonResult GetArticleByRef(string ID)//ID: c'est id de la filiere selectionée
+        {
+            //Pour eviter les conflis entre les differents foreinkey de idfiliere
+            //presentent dans la table etudiants
+            db.Configuration.ProxyCreationEnabled = false;
+            return Json(db.Articles.Where(p => p.refCat == ID), JsonRequestBehavior.AllowGet);
+        }
+
+
         [AllowAnonymous]
         public ActionResult Index()
         {
@@ -44,11 +65,6 @@ namespace proj.Controllers
             return View(vu);
         }
 
-        [Authorize(Roles = "Admin")]
-        public ActionResult IndexAdmin()
-        {
-            return View();
-        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -62,15 +78,6 @@ namespace proj.Controllers
 
             return View();
         }
-
-        [Authorize(Roles ="Admin")]
-        public ActionResult Administration()
-        {
-            ViewBag.Message = "Your admin panel.";
-
-            return View();
-        }
-
         [AllowAnonymous]
         public ActionResult Details(int id)
         {
