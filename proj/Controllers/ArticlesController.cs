@@ -10,7 +10,10 @@ namespace proj.Controllers
 {
     public class ArticlesController : Controller
     {
+        private ASPPROJEntities db = new ASPPROJEntities();
         // GET: Articles
+       
+
         public ActionResult Index()
         {
             HttpResponseMessage response = ClientCall.client.GetAsync("api/Articles").Result;
@@ -19,25 +22,14 @@ namespace proj.Controllers
             return View(liste);
         }
 
-        public ActionResult IndexAdmin()
-        {
-            HttpResponseMessage response = ClientCall.client.GetAsync("api/Articles").Result;
-            IEnumerable<Article> liste = response.Content.ReadAsAsync<IEnumerable<Article>>().Result;
-
-            return View(liste);
-        }
-
         // GET: Articles/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int id)
         {
-            return View();
+            Article article = db.Articles.Find(id);
+            return View(article);
         }
 
-        public ActionResult DetailsAdmin(string id)
-        {
-            
-            return View();
-        }
+       
 
         // GET: Articles/Create
         public ActionResult Create()
@@ -71,15 +63,21 @@ namespace proj.Controllers
         }
 
         // GET: Articles/Edit/5
-        public ActionResult Edit(string id)
+        
+        public ActionResult Edit(int id)
         {
-            return View();
+            HttpResponseMessage response2 = ClientCall.client.GetAsync("api/Categories").Result;
+            IEnumerable<Categorie> liste = response2.Content.ReadAsAsync<IEnumerable<Categorie>>().Result;
+            ViewBag.refCat = new SelectList(liste, "refCat", "nomcatg");
+            Article article = db.Articles.Find(id);
+            return View(article);
         }
 
         // POST: Articles/Edit/5
         [HttpPost]
         public ActionResult Edit(string id, Article formCollection)
         {
+            
             int id2 = Convert.ToInt32(id);
             try
             {
@@ -103,7 +101,8 @@ namespace proj.Controllers
         // GET: Articles/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Article article = db.Articles.Find(id);
+            return View(article);
         }
 
         // POST: Articles/Delete/5

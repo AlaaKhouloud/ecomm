@@ -24,9 +24,7 @@ namespace proj.Controllers
         public ActionResult Details(string id)
         {
             
-            Categorie cate = new Categorie();
-            cate.refCat = "gv";
-            cate.nomcatg = "kjn";
+            Categorie cate = db.Categories.Find(id);
             return View(cate);
         }
 
@@ -60,7 +58,9 @@ namespace proj.Controllers
         // GET: Categories/Edit/5
         public ActionResult Edit(string id)
         {
-            return View();
+            Categorie cate = db.Categories.Find(id);
+
+            return View(cate);
         }
 
         // POST: Categories/Edit/5
@@ -88,14 +88,16 @@ namespace proj.Controllers
         // GET: Categories/Delete/5
         public ActionResult Delete(string id)
         {
-            return View();
+            Categorie cate = db.Categories.Find(id);
+            
+            return View(cate);
         }
 
         // POST: Categories/Delete/5
         [HttpPost]
         public ActionResult Delete(string id,Categorie c)
         {
-            try
+            /*try
             {
                
                 HttpResponseMessage response = ClientCall.client.DeleteAsync("api/Categories/" + id).Result;
@@ -109,9 +111,14 @@ namespace proj.Controllers
             catch
             {
                 return View();
-            }
-           
+            }*/
+            Categorie cate = db.Categories.Find(id);
+            db.Categories.Remove(cate);
             
+            return RedirectToAction("Index");
+        
+       
+
         }
     }
 }
