@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace proj.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminCatController : Controller
     {
         private ASPPROJEntities db = new ASPPROJEntities();

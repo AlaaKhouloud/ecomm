@@ -133,7 +133,6 @@ namespace proj.Controllers
             {
                 // TODO: Add delete logic here
                 var message = ClientCall.client.DeleteAsync("api/LigneCommandes/" + id).Result;
-
                 return RedirectToAction("Index" , "Home");
             }
             catch

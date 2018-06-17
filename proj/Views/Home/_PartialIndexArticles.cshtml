@@ -31,7 +31,7 @@
                             <h2 class="product-name"><a href="#">@Model.articles.ElementAt(i).designation</a></h2>
                             <div class="product-btns">
                                 <h4 class="product-price">Quantité</h4> <input type="number" id="qte" value="1" /><hr />
-                                <button class="primary-btn add-to-cart" type="submit" onclick="location.href='@Url.Action("Create","LigneCommandes")?id=@Model.articles.ElementAt(i).numArticle&qte=' + document.getElementById('qte').value"><i class="fa fa-shopping-cart"></i>Ajouter au panier</button>
+                                <button class="primary-btn add-to-cart" type="submit" data-toggle="modal" data-target="#myModal" onclick="location.href='@Url.Action("Create","LigneCommandes")?id=@Model.articles.ElementAt(i).numArticle&qte=' + document.getElementById('qte').value"><i class="fa fa-shopping-cart"></i>Ajouter au panier</button>
                             </div>
                         </div>
                     </div>
@@ -40,6 +40,27 @@
             }
         </div>
         <!-- /row -->
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">E-Shop</h4>
+            </div>
+            <div class="modal-body">
+                <p>Bien ajouté o votre panier monsieur @User.Identity.Name</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
     </div>
 </div>
 

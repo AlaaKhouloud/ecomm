@@ -11,30 +11,12 @@
                 <div class="col-md-6">
                     <div id="product-main-view">
                         <div class="product-view">
-                            <img src="../Content/DemoUser/img/main-product01.jpg" alt="">
-                        </div>
-                        <div class="product-view">
-                            <img src="../Content/DemoUser/img/main-product02.jpg" alt="">
-                        </div>
-                        <div class="product-view">
-                            <img src="../Content/DemoUser/img/main-product03.jpg" alt="">
-                        </div>
-                        <div class="product-view">
-                            <img src="../Content/DemoUser/img/main-product04.jpg" alt="">
+                            <img src="../Content/DemoUser/img/@Model.article.photo" alt="">
                         </div>
                     </div>
                     <div id="product-view">
                         <div class="product-view">
-                            <img src="../Content/DemoUser/img/thumb-product01.jpg" alt="">
-                        </div>
-                        <div class="product-view">
-                            <img src="../Content/DemoUser/img/thumb-product02.jpg" alt="">
-                        </div>
-                        <div class="product-view">
-                            <img src="../Content/DemoUser/img/thumb-product03.jpg" alt="">
-                        </div>
-                        <div class="product-view">
-                            <img src="../Content/DemoUser/img/thumb-product04.jpg" alt="">
+                            <img src="../Content/DemoUser/img/@Model.article.photo" alt="" width="150px" height="200px">
                         </div>
                     </div>
                 </div>
@@ -44,22 +26,43 @@
                             <span>New</span>
                             <span class="sale">-20%</span>
                         </div>
-                        <h2 class="product-name">@Model.designation</h2>
-                        <h3 class="product-price">@Model.prixU</h3>
+                        <h2 class="product-name">@Model.article.designation</h2>
+                        <h3 class="product-price">@Model.article.prixU</h3>
 
                     </div>
-                    <p>@Model.stock Pi-ces disponibles</p>
+                    <p>@Model.article.stock Pièces disponibles</p>
                     <div class="product-btns">
                         <div class="qty-input">
                             <span class="text-uppercase">QTY: </span>
                             <input class="input" type="number">
                         </div>
-                        <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
-
+                        <button class="primary-btn add-to-cart" type="submit" onclick="location.href='@Url.Action("Create","LigneCommandes")?id=@Model.article.numArticle&qte='+document.getElementById('qte').value"><i class="fa fa-shopping-cart"></i>Ajouter au panier</button>
                     </div>
                 </div>
             </div>
 
         </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">E-Shop</h4>
+            </div>
+            <div class="modal-body">
+                <p>Bien ajouté o votre panier monsieur @User.Identity.Name</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
     </div>
 </div>

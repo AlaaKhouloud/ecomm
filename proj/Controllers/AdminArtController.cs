@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace proj.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminArtController : Controller
     {
         // GET: Articles
@@ -37,7 +38,7 @@ namespace proj.Controllers
         {
             HttpResponseMessage response = ClientCall.client.GetAsync("api/AdminCat").Result;
             IEnumerable<Categorie> liste = response.Content.ReadAsAsync<IEnumerable<Categorie>>().Result;
-            ViewBag.reference = new SelectList(liste, "refCat", "nomcatg");
+            ViewData["refCat"] = new SelectList(liste, "refCat", "nomcatg");
             return View();
         }
 

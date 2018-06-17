@@ -37,9 +37,14 @@
                         </div>
                         <strong class="text-uppercase">Mon Compte <i class="fa fa-caret-down"></i></strong>
                     </div>
-                   @if (User.Identity.GetUserId() is null) { 
-                       <a href="/Account/Login" class="text-uppercase">Login</a> <a href="/Account/Register" class="text-uppercase">Join</a>
-                   }
+                    @if (User.Identity.GetUserId() is null)
+                    {
+                        <a href="/Account/Login" class="text-uppercase">Login</a> <a href="/Account/Register" class="text-uppercase">Join</a>
+                    }
+                    @if (User.Identity.GetUserId() != null)
+                    {
+                        <a href="/Account/LogOff" class="text-uppercase">Déconnexion</a>
+                    }
                     <ul class="custom-menu">
                         <li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
                         <li><a href="#"><i class="fa fa-heart-o"></i> My Wishlist</a></li>
@@ -53,7 +58,8 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                         <div class="header-btns-icon">
                             <i class="fa fa-shopping-cart"></i>
-                            <span class="qty">@Model.Commandes.Count()</span>
+                            @if (User.Identity.GetUserId() != null)
+                            {<span class="qty">@Model.ligneCommandes.Count()</span>}
                         </div>
                         <strong class="text-uppercase">Mon Panier</strong>
                         <br>
@@ -62,8 +68,10 @@
                     <div class="custom-menu">
                         <div id="shopping-cart">
                             <div class="shopping-cart-list">
-                              @foreach (var item in Model.ligneCommandes)
-                               {
+
+                                @foreach (var item in Model.ligneCommandes)
+                                {
+
                                     <div class="product product-widget">
                                         <div class="product-thumb">
                                             <img src="../Content/DemoUser/img/thumb-@item.Article.photo" alt="">
@@ -72,9 +80,31 @@
                                             <h3 class="product-price">@item.totalPrice<span class="qty">@item.QteArticle</span></h3>
                                             <h2 class="product-name"><a href="#">@item.Article.designation</a></h2>
                                         </div>
-                                        <button class="cancel-btn" type="submit"  onclick="location.href='@Url.Action("Delete","LigneCommandes")?id=@item.numLigne'"><i class="fa fa-trash"></i></button>
+                                        <button class="cancel-btn" type="submit" data-toggle="modal" data-target="#myModal1" onclick="location.href='@Url.Action("Delete", "LigneCommandes")?id=@item.numLigne'"><i class="fa fa-trash"></i></button>
                                     </div>
-                              }
+
+                                    <!-- Modal -->
+                                    <div id="myModal1" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
+
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">E-Shop</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Cet article a été supprimer de votre panier monsieur @User.Identity.Name</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                }
                             </div>
                         </div>
                     </div>

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace proj.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AminCommController : Controller
     {
         private ASPPROJEntities db = new ASPPROJEntities();
